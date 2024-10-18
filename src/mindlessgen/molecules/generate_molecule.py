@@ -27,12 +27,23 @@ def generate_random_molecule(
     """
     Generate a random molecule of type Molecule.
     """
+    import time
+    second = time.time()
+    np.random.seed(int(second))
 
     mol = Molecule()
-    mol.atlist = generate_atom_list(
-        config_generate,
-        verbosity,
-    )
+
+    if (config_generate.soot):
+        mol.atlist = generate_atom_list_soot(
+            config_generate,
+            verbosity,
+        )
+    else:
+        mol.atlist = generate_atom_list(
+            config_generate,
+            verbosity,
+        )
+
     mol.num_atoms = np.sum(mol.atlist)
     mol.xyz, mol.ati = generate_coordinates(
         at=mol.atlist,
@@ -322,6 +333,102 @@ def generate_atom_list(cfg: GenerateConfig, verbosity: int = 1) -> np.ndarray:
     # Check if the number of atoms is within the defined limits
     check_min_max_atoms()
     ### ACTUAL WORKFLOW END ###
+
+    return natoms
+
+
+def generate_atom_list_soot(cfg: GenerateConfig, verbosity: int = 1) -> np.ndarray:
+    """
+    Generate a random molecule with a random number of atoms.
+    """
+    # Define a new set of all elements that can be included
+    set_all_elem = set(range(0, MAX_ELEM))
+    if cfg.forbidden_elements:
+        valid_elems = set_all_elem - set(cfg.forbidden_elements)
+    else:
+        valid_elems = set_all_elem
+
+    natoms = np.zeros(
+        102, dtype=int
+    )  # 102 is the number of accessible elements in the periodic table
+
+    # Some sanity checks:
+    # - Check if the minimum number of atoms is smaller than the maximum number of atoms
+    if cfg.min_num_atoms is not None and cfg.max_num_atoms is not None:
+        if cfg.min_num_atoms > cfg.max_num_atoms:
+            raise ValueError(
+                "The minimum number of atoms is larger than the maximum number of atoms."
+            )
+
+    # - Check if the summed number of minimally required atoms from cfg.element_composition
+    #   is larger than the maximum number of atoms
+    if cfg.max_num_atoms is not None:
+        if (
+            np.sum(
+                [
+                    cfg.element_composition.get(i, (0, 0))[0]
+                    for i in cfg.element_composition
+                ]
+            )
+            > cfg.max_num_atoms
+        ):
+            raise ValueError(
+                "The summed number of minimally required atoms "
+                + "from the fixed composition is larger than the maximum number of atoms."
+            )
+    #### Compute C:H ratio
+    ntotAtoms = np.random.randint(cfg.min_num_atoms, cfg.max_num_atoms)
+    print("Total atoms:",ntotAtoms,cfg.min_num_atoms, cfg.max_num_atoms)
+    Hrange = (cfg.element_composition[0][0],cfg.element_composition[0][1])
+    Crange = (cfg.element_composition[5][0],cfg.element_composition[5][1])
+
+    if(Hrange[0] != Hrange[1]):
+        H_count = np.random.randint(Hrange[0], Hrange[1] + 1)
+    else:
+        H_count =  Hrange[0] 
+
+    if(Crange[0] != Crange[1]):
+        C_count = np.random.randint(Crange[0], Crange[1] + 1)
+    else:
+        C_count =  Crange[0]     
+    if verbosity > 1:            
+        print(f"C:H ratio is {C_count/H_count:.4f}")
+        
+
+
+    def add_CH(CH_ratio: float,  ntotAtoms: int):
+        """
+        Default random atom generation.
+        """
+        print()
+        
+        natoms[5] = int(ntotAtoms* CH_ratio/(CH_ratio+1) ) 
+        natoms[0] = ntotAtoms-natoms[5]
+    def add_others():
+        # Add other elements such as O,N,S or other weird elements
+        for ele in cfg.element_composition:
+            if(ele != 0 and ele !=5): 
+                eleMinN = cfg.element_composition[ele][0]
+                eleMaxN = cfg.element_composition[ele][1]
+                if (eleMinN == eleMaxN): 
+                    natoms[ele] =eleMaxN
+                else:
+                    natoms[ele] = np.random.randint(eleMinN,eleMaxN+1)
+
+    def refine_decomposition():
+        # Align with the given element_composition:
+        if(sum(natoms) > cfg.max_num_atoms):
+            nRes = sum(natoms)-cfg.max_num_atoms
+            natoms[0] = natoms[0] - nRes/2
+            natoms[5] = natoms[5] - nRes/2
+        
+
+
+    ### ACTUAL WORKFLOW START ###
+    add_CH( C_count/H_count, ntotAtoms )
+    add_others()
+    # Check if pre-defined atom type counts are within the defined limits
+    refine_decomposition()
 
     return natoms
 

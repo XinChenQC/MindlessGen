@@ -39,7 +39,7 @@ def generator(config: ConfigManager) -> tuple[list[Molecule] | None, int]:
     if config.general.print_config:
         print(config)
         return None, 0
-
+    print(config.generate.soot)
     # Import and set up required engines
     refine_engine: QMMethod = setup_engines(
         config.refine.engine,

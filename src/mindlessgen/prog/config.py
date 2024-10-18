@@ -9,7 +9,6 @@ from abc import ABC, abstractmethod
 import warnings
 import multiprocessing as mp
 import toml
-
 from ..molecules import PSE_NUMBERS
 
 
@@ -183,6 +182,7 @@ class GenerateConfig(BaseConfig):
         self._scale_fragment_detection: float = 1.25
         self._scale_minimal_distance: float = 0.8
         self._contract_coords: bool = False
+        self._soot: bool = False
 
     def get_identifier(self) -> str:
         return "generate"
@@ -401,6 +401,23 @@ class GenerateConfig(BaseConfig):
         if not isinstance(contract_coords, bool):
             raise TypeError("Contract coords should be a boolean.")
         self._contract_coords = contract_coords
+
+
+    @property
+    def soot(self):
+        """
+        Get the contract_coords flag.
+        """
+        return self._soot
+    
+    @soot.setter
+    def soot(self, soot: bool):
+        """
+        Set the contract_coords flag.
+        """
+        if not isinstance(soot, bool):
+            raise TypeError("Contract coords should be a boolean.")
+        self._soot = soot
 
 
 class RefineConfig(BaseConfig):

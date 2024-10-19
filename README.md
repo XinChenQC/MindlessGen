@@ -1,21 +1,12 @@
-# Mindless Molecule Generator
+# Mindless Molecule Generator (Soot Edition)
 
-![CI](https://github.com/grimme-lab/MindlessGen/actions/workflows/ci.yml/badge.svg)
-<a href="http://www.apache.org/licenses/LICENSE-2.0">
-  <img src="https://img.shields.io/badge/License-Apache%202.0-orange.svg" alt="Apache-2.0"/>
-</a>
-<a href="https://img.shields.io/badge/Python-3.10%20|%203.11%20|%203.12-blue.svg">
-  <img src="https://img.shields.io/badge/Python-3.10%20|%203.11|%203.12-blue.svg" alt="Python Versions"/>
-</a>
-<img align="right" src="assets/C1H2N1O2Te2Er1Lu2_89bd3e.png" height="150" />
 
-`mindlessgen` is a Python-based program for semi-automated generation of "mindless" small molecules, as described [here](https://pubs.acs.org/doi/full/10.1021/ct800511q).
-The rule-based algorithm places atoms randomly in coordinate space and applies several optimization, fragment detection, and sanity check steps.
-The program is mainly controlled via a [TOML](https://github.com/grimme-lab/MindlessGen/blob/main/mindlessgen.toml) configuration file, see below for details.
+
+`mindlessgen-soot` is based on [Minelessgen](https://github.com/grimme-lab/MindlessGen) as described [here](https://pubs.acs.org/doi/full/10.1021/ct800511q). Specifically for generating soot-like molecules. Soot molecules are particles with a high C:H ratio and few oxygen atoms. However, soot molecules are generally classified as polycyclic aromatic hydrocarbons (PAHs). This project cannot specifically generate PAHs; it can only produce carbonous particles.
 
 ## One-page overview
 
-![One-pager overview](assets/MindlessGen_SingleSlide.png)
+![One-pager overview](assets/soot-mindless.jpg)
 
 ## Installation
 

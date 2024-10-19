@@ -378,7 +378,6 @@ def generate_atom_list_soot(cfg: GenerateConfig, verbosity: int = 1) -> np.ndarr
             )
     #### Compute C:H ratio
     ntotAtoms = np.random.randint(cfg.min_num_atoms, cfg.max_num_atoms)
-    print("Total atoms:",ntotAtoms,cfg.min_num_atoms, cfg.max_num_atoms)
     Hrange = (cfg.element_composition[0][0],cfg.element_composition[0][1])
     Crange = (cfg.element_composition[5][0],cfg.element_composition[5][1])
 
@@ -400,7 +399,6 @@ def generate_atom_list_soot(cfg: GenerateConfig, verbosity: int = 1) -> np.ndarr
         """
         Default random atom generation.
         """
-        print()
         
         natoms[5] = int(ntotAtoms* CH_ratio/(CH_ratio+1) ) 
         natoms[0] = ntotAtoms-natoms[5]

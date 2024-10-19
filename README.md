@@ -4,7 +4,7 @@
 
 `mindlessgen-soot` is based on [Minelessgen](https://github.com/grimme-lab/MindlessGen) as described [here](https://pubs.acs.org/doi/full/10.1021/ct800511q). Specifically for generating soot-like molecules. Soot molecules are particles with a high C:H ratio and few oxygen atoms. However, soot molecules are generally classified as polycyclic aromatic hydrocarbons (PAHs). This project cannot specifically generate PAHs; it can only produce carbonous particles.
 
-## One-page overview
+## Examples
 
 ![One-pager overview](assets/soot-mindless.jpg)
 

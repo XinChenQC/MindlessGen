@@ -25,7 +25,7 @@ mamba activate mindlessgen
 
 Afterwards, the package can be installed by downloading the package from `PyPi`:
 ```bash
-pip install mindlessgen
+pip install mindlessgen-soot
 ```
 This command installs the latest release version of `mindlessgen`.
 
@@ -36,26 +36,6 @@ pip install .
 ```
 
 Both installation methods work in principle also without a virtual environment, but it is strongly recommended to use one to avoid conflicts with other packages.
-
-### Development purposes
-
-For working on the code of `mindlessgen`, the following setup is recommended:
-```
-mamba create -n mindlessgen python=3.12
-mamba activate mindlessgen
-git clone {link to the MindlessGen repository}
-pip install -e '.[dev]'
-```
-Thereby, all necessary development tools (e.g., `ruff`, `mypy`, `tox`, `pytest`, and `pre-commit`) are installed.
-Before making changes to the code, activate the `pre-commit` hooks via:
-```
-pre-commit install
-```
-Before pushing a commit, run the optional tests, which depend on external dependencies like `xtb`, via
-```
-pytest -vv --optional
-```
-Further information on how to contribute to this project can also be found in the [contribution guidelines](https://github.com/grimme-lab/MindlessGen/blob/main/CONTRIBUTING.md).
 
 ## Usage
 

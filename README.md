@@ -4,38 +4,25 @@
 
 `mindlessgen-soot` is based on [Minelessgen](https://github.com/grimme-lab/MindlessGen) as described [here](https://pubs.acs.org/doi/full/10.1021/ct800511q). Specifically for generating soot-like molecules. Soot molecules are particles with a high C:H ratio and few oxygen atoms. However, soot molecules are generally classified as polycyclic aromatic hydrocarbons (PAHs). This project cannot specifically generate PAHs; it can only produce carbonous particles.
 
+This branch will not sync with [Minelessgen](https://github.com/grimme-lab/MindlessGen). 
 ## Examples
 
 ![One-pager overview](assets/soot-mindless.jpg)
 
 ## Installation
 
+Installation is the same with [Minelessgen](https://github.com/grimme-lab/MindlessGen). 
+
 > [!IMPORTANT]
 > `xtb` (see [here](https://github.com/grimme-lab/xtb)) has to be installed on your system, either via `conda-forge`, as a release binary, or compiled from source.
 If post-processing with DFT is desired, also `orca` (see [here](https://www.faccts.de/docs/orca/6.0/manual/index.html)) has to be available.
 
-### Non-development purposes
+It can be installed from the latest source code via cloning the repository:
 
-You can install the project in an existing virtual environment (provided for example by the package managers `conda` or `mamba` (see also [here](https://github.com/conda-forge/miniforge) and [here](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html))).
-With `mamba`, a matching Python environment can be set up and activated as follows:
-```
-mamba create -n mindlessgen python=3.12
-mamba activate mindlessgen
-```
-
-Afterwards, the package can be installed by downloading the package from `PyPi`:
-```bash
-pip install mindlessgen-soot
-```
-This command installs the latest release version of `mindlessgen`.
-
-Alternatively, it can be installed from the latest source code via cloning the repository:
 ```bash
 git clone https://github.com/grimme-lab/MindlessGen.git # or the analogous SSH link
 pip install .
 ```
-
-Both installation methods work in principle also without a virtual environment, but it is strongly recommended to use one to avoid conflicts with other packages.
 
 ## Usage
 
